@@ -17,8 +17,8 @@ with open('.pkl/std_scaler.pkl', 'rb') as std_scaler_file:
 def prediction(Age, Sex, ChestPainType, RestingBP, Cholesterol, MaxHR, ExerciseAngina, Oldpeak, ST_Slope):
     # Mappings for categorical features
     sex_mapping = {'Male': 0, 'Female': 1}
-    chest_pain_mapping = {'ATA': 0, 'NAP': 1, 'ASY': 2, 'TA': 3}
-    exercise_angina_mapping = {'N': 0, 'Y': 1}
+    chest_pain_mapping = {'Atypical Angina': 0, 'Non-Anginal Pain': 1, 'Asymptomatic': 2, 'Typical Angina': 3}
+    exercise_angina_mapping = {'No': 0, 'Yes': 1}
     st_slope_mapping = {'Up': 0, 'Flat': 1, 'Down': 2}
 
     # Convert categorical inputs to numerical values
@@ -48,19 +48,21 @@ def prediction(Age, Sex, ChestPainType, RestingBP, Cholesterol, MaxHR, ExerciseA
 
 # Main function for Streamlit app
 def main():
-    st.set_page_config(page_title="Heart Disease Prediction", page_icon="🫀", layout="centered")
+    st.set_page_config(page_title="Heart Failure Prediction", page_icon="🫀", layout="centered")
+    st.header('🫀 Heart Disease Prediction App')
+    st.write("Please enter the patient details and click 'Predict' to get the prediction.")
 
     # Input form for prediction
     with st.form(key='prediction_form'):
         Age = st.number_input("Age", min_value=0, max_value=200, value=0)
         Sex = st.selectbox("Sex", ["Male", "Female"])
-        ChestPainType = st.selectbox("Chest Pain Type", ["ATA", "NAP", "ASY", "TA"])
-        RestingBP = st.number_input("Resting Blood Pressure", min_value=0, max_value=200, value=0)
-        Cholesterol = st.number_input("Cholesterol", min_value=0, max_value=500, value=0)
+        ChestPainType = st.selectbox("Chest Pain Type", ["Atypical Angina", "Non-Anginal Pain", "Asymptomatic", "Typical Angina"])
+        RestingBP = st.number_input("Resting Blood Pressure [mm Hg]", min_value=0, max_value=200, value=0)
+        Cholesterol = st.number_input("Serum Cholesterol [mm/dl]", min_value=0, max_value=500, value=0)
         MaxHR = st.number_input("Maximum Heart Rate", min_value=56, max_value=208, value=56)
-        ExerciseAngina = st.selectbox("Exercise Angina", ["N", "Y"])
-        Oldpeak = st.number_input("Oldpeak", min_value=-5.0, max_value=7.0, value=0.0)
-        ST_Slope = st.selectbox("ST Slope", ["Up", "Flat", "Down"])
+        ExerciseAngina = st.selectbox("Exercise Angina", ["No", "Yes"])
+        Oldpeak = st.number_input("Oldpeak [Numeric value measured in depression]", min_value=-5.0, max_value=7.0, value=0.0)
+        ST_Slope = st.selectbox("The slope of the peak exercise ST segment", ["Up", "Flat", "Down"])
 
         # Predict button
         submitted = st.form_submit_button("Predict")
@@ -70,10 +72,12 @@ def main():
         if result[0] == 0:
             st.success("Prediction: Normal (No Heart Disease)")
         else:
-            st.error("Prediction: Have Heart Disease")
+            st.error("Prediction: Have Heart Failure")
         
         st.write(f"Probability of Normal: {probability[0][0] * 100:.2f}%")
-        st.write(f"Probability of Heart Disease: {probability[0][1] * 100:.2f}%")
+        st.write(f"Probability of having Heart Failure: {probability[0][1] * 100:.2f}%")
+
+    st.info('Copyright © Ardava Barus - All rights reserved')
 
 if __name__ == '__main__':
     main()
