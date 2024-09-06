@@ -1,7 +1,6 @@
 import numpy as np
 import pickle as pkl
 import streamlit as st
-import plotly.express as px
 
 # Load the classifier and scalers
 with open('.pkl/classifier.pkl', 'rb') as pickle_in:
@@ -73,7 +72,7 @@ def main():
             st.success("Prediction: Normal (No Heart Failure)")
         else:
             st.error("Prediction: Have Heart Failure")
-        
+        99 
         st.write(f"Probability of Normal: {probability[0][0] * 100:.2f}%")
         st.write(f"Probability of having Heart Failure: {probability[0][1] * 100:.2f}%")
 
