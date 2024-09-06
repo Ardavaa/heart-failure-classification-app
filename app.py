@@ -70,7 +70,7 @@ def main():
     if submitted:
         result, probability = prediction(Age, Sex, ChestPainType, RestingBP, Cholesterol, MaxHR, ExerciseAngina, Oldpeak, ST_Slope)
         if result[0] == 0:
-            st.success("Prediction: Normal (No Heart Disease)")
+            st.success("Prediction: Normal (No Heart Failure)")
         else:
             st.error("Prediction: Have Heart Failure")
         
