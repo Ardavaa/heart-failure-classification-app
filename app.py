@@ -72,7 +72,7 @@ def main():
             st.success("Prediction: Normal (No Heart Failure)")
         else:
             st.error("Prediction: Have Heart Failure")
-        99 
+        
         st.write(f"Probability of Normal: {probability[0][0] * 100:.2f}%")
         st.write(f"Probability of having Heart Failure: {probability[0][1] * 100:.2f}%")
 
